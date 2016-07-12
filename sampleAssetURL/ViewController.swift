@@ -9,6 +9,7 @@
 import UIKit
 import AssetsLibrary
 import Photos
+import MobileCoreServices
 
 
 class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
@@ -35,6 +36,20 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
             
         }
         
+    }
+    
+    @IBAction func saveMovie(sender: UIButton) {
+        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.PhotoLibrary) {
+            
+            let picker = UIImagePickerController()
+            picker.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+            picker.mediaTypes = [kUTTypeMovie as String]
+            picker.allowsEditing = false
+            picker.delegate = self
+            picker.videoQuality = UIImagePickerControllerQualityType.TypeHigh
+            
+            self.presentViewController(picker, animated: true, completion: nil)
+        }
     }
     
     @IBAction func display(sender: UIButton) {
@@ -67,6 +82,8 @@ class ViewController: UIViewController,UIImagePickerControllerDelegate,UINavigat
         let assetURL:AnyObject = info[UIImagePickerControllerReferenceURL]!
         
         var strURL:String = assetURL.description
+        
+        print(strURL)
         
         
         // ユーザーデフォルトを用意する
